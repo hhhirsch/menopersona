@@ -1,81 +1,320 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MenoPersona</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            width: 80%;
-            max-width: 500px;
-            margin: auto;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .symptom {
-            background: #f8d7da;
-            color: #721c24;
-            margin: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .diagnose-btn {
-            margin-top: 20px;
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .diagnose-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MenoPersona - Demo</title>
+  <style>
+    /* --- Grundlayout und Farben --- */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fff0f6; /* Pastelliger Hintergrund */
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    /* --- Linke Spalte (Symptom-Bibliothek) --- */
+    .sidebar-left {
+      background-color: #ffe6ef;
+      padding: 20px;
+      border-right: 1px solid #ffd9e8;
+    }
+
+    .sidebar-left h2 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #c2185b;
+    }
+
+    .sidebar-left p {
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .symptom-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .symptom-list li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ffd9e8;
+      border-radius: 4px;
+      cursor: move;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .symptom-list li:hover {
+      background: #fce4ec;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    /* --- Mittlere Spalte (Ihre MenoPersona) --- */
+    .main {
+      padding: 20px;
+      background-color: #ffebf2;
+    }
+
+    .main h2 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #c2185b;
+    }
+
+    .personas {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .persona {
+      background: #ffd9e8;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .persona:hover {
+      background: #ffcce2;
+    }
+
+    .persona-active {
+      background: #ffbdd7;
+      font-weight: bold;
+    }
+
+    .profile {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #f8bbd0;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Silhouetten-Dummy */
+    .avatar::before {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 30px;
+    }
+    .avatar::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 40px;
+      background: #fff;
+      position: absolute;
+      top: 65px;
+      left: 20px;
+      border-radius: 10px;
+    }
+
+    .symptoms {
+      flex: 1;
+      min-height: 120px;
+      border: 2px dashed #ffc1e3;
+      border-radius: 4px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      background-color: #fff;
+    }
+
+    .symptom-slot {
+      background: #ffebf2;
+      border: 1px solid #ffc1e3;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin: 5px;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .symptom-slot:hover {
+      background: #ffd9e8;
+    }
+
+    /* --- Rechte Spalte (Weiter mit Diagnose) --- */
+    .sidebar-right {
+      background-color: #ffe6ef;
+      padding: 20px;
+      border-left: 1px solid #ffd9e8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar-right h2 {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      color: #c2185b;
+    }
+
+    .sidebar-right button {
+      padding: 12px 20px;
+      background: #c2185b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-size: 16px;
+    }
+
+    .sidebar-right button:hover {
+      background: #ad1457;
+    }
+
+    /* --- Keyframe Animationen (optional) --- */
+    /* Du kannst Animationen hinzufügen, wenn du magst */
+  </style>
 </head>
 <body>
 
 <div class="container">
+
+  <!-- Linke Spalte: Symptom-Bibliothek -->
+  <div class="sidebar-left">
+    <h2>Symptom-Bibliothek</h2>
+    <p>Klicken Sie auf ein Symptom, um mehr darüber zu lernen,<br>
+       oder ziehen Sie es per Drag & Drop zu Ihrer MenoPersona.</p>
+    <ul class="symptom-list">
+      <li draggable="true">Hitzewallungen</li>
+      <li draggable="true">Schlafstörungen</li>
+      <li draggable="true">Stimmungsschwankungen</li>
+      <li draggable="true">Gewichtszunahme</li>
+      <li draggable="true">Energieverlust</li>
+    </ul>
+  </div>
+
+  <!-- Mittlere Spalte: Ihre MenoPersona -->
+  <div class="main">
     <h2>Ihre MenoPersona</h2>
-    
-    <div>
-        <h3>Symptome:</h3>
-        <div class="symptom">🔥 Hitzewallungen</div>
-        <div class="symptom">⚖️ Gewichtszunahme</div>
+    <div class="personas">
+      <div class="persona persona-active">Benutzerdefiniert</div>
+      <div class="persona">Persona 1</div>
+      <div class="persona">Persona 2</div>
+      <div class="persona">Persona 3</div>
+      <div class="persona">Persona 4</div>
     </div>
 
-    <button class="diagnose-btn" onclick="zeigeDiagnose()">Weiter mit: Diagnose</button>
+    <div class="profile">
+      <div class="avatar"></div>
+      <div class="symptoms" id="dropZone">
+        <!-- Hier landen die gedroppten Symptome -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Rechte Spalte: Weiter mit Diagnose -->
+  <div class="sidebar-right">
+    <h2>Weiter mit:</h2>
+    <button onclick="zeigeDiagnose()">Diagnose</button>
+  </div>
+
 </div>
 
 <script>
-    function zeigeDiagnose() {
-        let diagnoseText = "Die Person leidet unter Symptomen, wie Hitzewallungen und Gewichtszunahme. Eine weitere Behandlung ist notwendig, um den Leidensdruck zu minimieren.";
-        let diagnoseWindow = window.open("", "Diagnose", "width=400,height=300");
-        
-        if (diagnoseWindow) {
-            diagnoseWindow.document.write("<html><head><title>Diagnose</title></head><body style='font-family:Arial, sans-serif; padding:20px; text-align:center;'>");
-            diagnoseWindow.document.write("<h2>Diagnose</h2>");
-            diagnoseWindow.document.write("<p style='font-size:18px;'>" + diagnoseText + "</p>");
-            diagnoseWindow.document.write("<button onclick='window.close()' style='margin-top:20px; padding:10px 20px; background-color:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer;'>Schließen</button>");
-            diagnoseWindow.document.write("</body></html>");
-            diagnoseWindow.document.close();
-        } else {
-            alert("Das Pop-up wurde blockiert. Bitte erlaube Pop-ups für diese Seite.");
-        }
-    }
-</script>
+  /* ========== Drag & Drop ========== */
+  const symptomItems = document.querySelectorAll('.symptom-list li');
+  const dropZone = document.getElementById('dropZone');
 
+  symptomItems.forEach(item => {
+    // Start des Drag-Vorgangs
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.innerText);
+      e.target.style.opacity = '0.4';
+    });
+
+    // Ende des Drag-Vorgangs
+    item.addEventListener('dragend', e => {
+      e.target.style.opacity = '1';
+    });
+  });
+
+  // Wenn etwas über der Dropzone ist
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault(); // Erlaubt das Droppen
+  });
+
+  // Wenn etwas in der Dropzone "losgelassen" wird
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    const text = e.dataTransfer.getData('text/plain');
+    
+    // Neuen Div-Container als "Symptom-Slot" erstellen
+    const newSymptom = document.createElement('div');
+    newSymptom.classList.add('symptom-slot');
+    newSymptom.innerText = text;
+    dropZone.appendChild(newSymptom);
+  });
+
+  /* ========== Diagnose-Pop-up ========== */
+  function zeigeDiagnose() {
+    // Alle gedroppten Symptome einsammeln
+    const slots = document.querySelectorAll('.symptom-slot');
+    let symptomTexte = [];
+    slots.forEach(slot => {
+      symptomTexte.push(slot.innerText);
+    });
+
+    // Falls keine Symptome gedroppt wurden, Standardtext
+    if(symptomTexte.length === 0) {
+      symptomTexte.push("Keine Symptome ausgewählt");
+    }
+
+    // Dynamische Diagnose-Meldung
+    const diagnoseText = 
+      "Die Person leidet unter Symptomen, wie " + 
+      symptomTexte.join(", ") + 
+      ". Eine weitere Behandlung ist notwendig, um den Leidensdruck zu minimieren.";
+
+    // Pop-up-Fenster öffnen
+    let diagnoseWindow = window.open("", "Diagnose", "width=420,height=300");
+
+    if (diagnoseWindow) {
+      diagnoseWindow.document.write("<html><head><title>Diagnose</title></head><body style='font-family:Arial, sans-serif; padding:20px; text-align:center; background:#fff0f6;'>");
+      diagnoseWindow.document.write("<h2 style='color:#c2185b;'>Diagnose</h2>");
+      diagnoseWindow.document.write("<p style='font-size:16px; line-height:1.4;'>" + diagnoseText + "</p>");
+      diagnoseWindow.document.write("<button onclick='window.close()' style='margin-top:20px; padding:10px 20px; background-color:#c2185b; color:white; border:none; border-radius:5px; cursor:pointer;'>Schließen</button>");
+      diagnoseWindow.document.write("</body></html>");
+      diagnoseWindow.document.close();
+    } else {
+      alert("Das Pop-up wurde blockiert. Bitte erlaube Pop-ups für diese Seite.");
+    }
+  }
+</script>
 </body>
 </html>
-
