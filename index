@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wireframe Demo - MenoPersona</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* --- Linke Spalte (Symptom-Bibliothek) --- */
+    .sidebar-left {
+      background: #f8f8f8;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      animation: slideInLeft 0.5s ease forwards;
+    }
+
+    .sidebar-left h2 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .sidebar-left p {
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    .symptom-list {
+      list-style: none;
+    }
+
+    .symptom-list li {
+      background: #fff;
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      cursor: move;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .symptom-list li:hover {
+      background: #eaeaea;
+    }
+
+    /* --- Mittlere Spalte (MenoPersona) --- */
+    .main {
+      padding: 20px;
+      position: relative;
+      animation: fadeIn 0.7s ease forwards;
+    }
+
+    .main h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .personas {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .persona {
+      background: #ddd;
+      border-radius: 4px;
+      padding: 10px 15px;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .persona:hover {
+      background: #ccc;
+    }
+
+    .persona-active {
+      background: #bbb;
+      font-weight: bold;
+    }
+
+    .profile {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #e0e0e0;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Silhouetten-Dummy */
+    .avatar::before {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 60px;
+      background: #ccc;
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 30px;
+    }
+
+    .avatar::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 40px;
+      background: #ccc;
+      position: absolute;
+      top: 65px;
+      left: 20px;
+      border-radius: 10px;
+    }
+
+    .symptoms {
+      flex: 1;
+      min-height: 120px;
+      border: 2px dashed #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+    }
+
+    .symptom-slot {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin: 5px;
+      transition: background 0.3s;
+    }
+
+    .symptom-slot:hover {
+      background: #eee;
+    }
+
+    /* --- Rechte Spalte (Weiter mit Diagnose) --- */
+    .sidebar-right {
+      background: #f8f8f8;
+      padding: 20px;
+      border-left: 1px solid #ddd;
+      animation: slideInRight 0.5s ease forwards;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar-right h2 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .sidebar-right button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .sidebar-right button:hover {
+      background: #0056b3;
+    }
+
+    /* --- Keyframe Animationen --- */
+    @keyframes slideInLeft {
+      0% { transform: translateX(-100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      0% { transform: translateX(100%); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Linke Spalte: Symptom-Bibliothek -->
+  <div class="sidebar-left">
+    <h2>Symptom-Bibliothek</h2>
+    <p>Klicken Sie auf ein Symptom, um mehr darüber zu lernen<br>
+       oder ziehen Sie es per Drag & Drop zur MenoPersona.</p>
+    <ul class="symptom-list">
+      <li draggable="true">Hitzewallungen</li>
+      <li draggable="true">Schlafstörungen</li>
+      <li draggable="true">Stimmungsschwankungen</li>
+      <li draggable="true">Gewichtszunahme</li>
+      <li draggable="true">Energieverlust</li>
+    </ul>
+  </div>
+
+  <!-- Mittlere Spalte: Ihre MenoPersona -->
+  <div class="main">
+    <h2>Ihre MenoPersona</h2>
+    <div class="personas">
+      <div class="persona persona-active">Benutzerdefiniert</div>
+      <div class="persona">Persona 1</div>
+      <div class="persona">Persona 2</div>
+      <div class="persona">Persona 3</div>
+      <div class="persona">Persona 4</div>
+      <div class="persona">Persona 5</div>
+    </div>
+
+    <div class="profile">
+      <div class="avatar"></div>
+      <div class="symptoms" id="dropZone">
+        <!-- Hier werden die gedroppten Symptome angezeigt -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Rechte Spalte: Weiter mit Diagnose -->
+  <div class="sidebar-right">
+    <h2>Weiter mit:</h2>
+    <button>Diagnose</button>
+  </div>
+</div>
+
+<script>
+  // Einfaches Drag & Drop-Beispiel
+  const symptomItems = document.querySelectorAll('.symptom-list li');
+  const dropZone = document.getElementById('dropZone');
+
+  symptomItems.forEach(item => {
+    // Start des Drag-Vorgangs
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.innerText);
+      e.target.style.opacity = '0.4';
+    });
+
+    // Ende des Drag-Vorgangs
+    item.addEventListener('dragend', e => {
+      e.target.style.opacity = '1';
+    });
+  });
+
+  // Wenn etwas über der Dropzone ist
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault(); // Erlaubt das Droppen
+  });
+
+  // Wenn etwas in der Dropzone "losgelassen" wird
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    const text = e.dataTransfer.getData('text/plain');
+    
+    // Erstelle einen neuen Div-Container als "Symptom-Slot"
+    const newSymptom = document.createElement('div');
+    newSymptom.classList.add('symptom-slot');
+    newSymptom.innerText = text;
+    dropZone.appendChild(newSymptom);
+  });
+</script>
+</body>
+</html>
