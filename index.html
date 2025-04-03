@@ -218,8 +218,29 @@
       100% { transform: translateX(0); opacity: 1; }
     }
   </style>
+  <style>
+    .diagnose-btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .diagnose-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
+  <script>
+    function zeigeDiagnose() {
+        let diagnoseText = "Die Person leidet unter Symptomen, wie Hitzewallungen und Gewichtszunahme. Eine weitere Behandlung ist notwendig, um den Leidensdruck zu minimieren.";
+        window.open("", "Diagnose", "width=400,height=300").document.write("<p style='font-size:18px; padding:20px;'>" + diagnoseText + "</p>");
+    }
+</script>
 <body>
+  <button class="diagnose-btn" onclick="zeigeDiagnose()">Weiter mit: Diagnose</button>
 
 <div class="container">
 
