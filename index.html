@@ -3,14 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MenoPersona - Demo</title>
+  <title>MenoPersona - Dunkles Blaues Design</title>
   <style>
-    /* --- Grundlayout und Farben --- */
+    /* =====================
+       Farb-Variablen
+       ===================== */
+    :root {
+      /* Haupt-Hintergrund (Body) */
+      --color-body-bg: #0B2133;
+
+      /* Container-Hintergrund */
+      --color-container-bg: #13293D;
+
+      /* Haupt-Textfarbe */
+      --color-text: #ffffff;
+
+      /* Linke und rechte Spalte */
+      --color-sidebar-bg: #1B3A57;
+      --color-sidebar-border: #26455C;
+
+      /* Mittlere Spalte */
+      --color-main-bg: #142F43;
+
+      /* Karten-/Element-Hintergrund */
+      --color-element-bg: #1E425F;
+      --color-element-border: #39627C;
+
+      /* Akzentfarbe für Buttons, Hover-Effekte, etc. */
+      --color-accent: #007BFF;
+      --color-accent-hover: #0056B3;
+    }
+
+    /* =====================
+       Grundlayout und Container
+       ===================== */
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background-color: #fff0f6; /* Pastelliger Hintergrund */
+      background-color: var(--color-body-bg);
+      color: var(--color-text);
     }
 
     .container {
@@ -19,29 +51,31 @@
       gap: 20px;
       max-width: 1200px;
       margin: 40px auto;
-      background-color: #ffffff;
+      background-color: var(--color-container-bg);
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
       overflow: hidden;
+      padding: 20px; /* etwas Padding für Luft */
     }
 
-    /* --- Linke Spalte (Symptom-Bibliothek) --- */
+    /* =====================
+       Linke Spalte (Symptom-Bibliothek)
+       ===================== */
     .sidebar-left {
-      background-color: #ffe6ef;
+      background-color: var(--color-sidebar-bg);
       padding: 20px;
-      border-right: 1px solid #ffd9e8;
+      border-right: 1px solid var(--color-sidebar-border);
     }
 
     .sidebar-left h2 {
       margin-bottom: 10px;
       font-size: 1.2rem;
-      color: #c2185b;
     }
 
     .sidebar-left p {
       font-size: 0.95rem;
       margin-bottom: 20px;
-      color: #666;
+      color: #cccccc;
       line-height: 1.4;
     }
 
@@ -51,40 +85,45 @@
     }
 
     .symptom-list li {
-      background: #fff;
+      background: var(--color-element-bg);
       margin: 5px 0;
       padding: 10px;
-      border: 1px solid #ffd9e8;
+      border: 1px solid var(--color-element-border);
       border-radius: 4px;
       cursor: move;
       transition: background 0.3s, box-shadow 0.3s;
     }
 
     .symptom-list li:hover {
-      background: #fce4ec;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      background: #2b4e6a;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
     }
 
-    /* --- Mittlere Spalte (Ihre MenoPersona) --- */
+    /* =====================
+       Mittlere Spalte (Ihre MenoPersona)
+       ===================== */
     .main {
       padding: 20px;
-      background-color: #ffebf2;
+      background-color: var(--color-main-bg);
+      border-left: 1px solid var(--color-sidebar-border);
+      border-right: 1px solid var(--color-sidebar-border);
     }
 
     .main h2 {
       font-size: 1.3rem;
       margin-bottom: 10px;
-      color: #c2185b;
     }
 
     .personas {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
     .persona {
-      background: #ffd9e8;
+      background: var(--color-element-bg);
+      border: 1px solid var(--color-element-border);
       border-radius: 4px;
       padding: 8px 12px;
       cursor: pointer;
@@ -92,11 +131,11 @@
     }
 
     .persona:hover {
-      background: #ffcce2;
+      background: #2b4e6a;
     }
 
     .persona-active {
-      background: #ffbdd7;
+      background: #2b4e6a;
       font-weight: bold;
     }
 
@@ -104,15 +143,17 @@
       display: flex;
       gap: 20px;
       align-items: flex-start;
+      margin-top: 20px;
     }
 
     .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: #f8bbd0;
+      background: #1E425F;
       position: relative;
       flex-shrink: 0;
+      border: 1px solid var(--color-element-border);
     }
 
     /* Silhouetten-Dummy */
@@ -121,7 +162,7 @@
       display: block;
       width: 60px;
       height: 60px;
-      background: #fff;
+      background: #26455C;
       border-radius: 50%;
       position: absolute;
       top: 15px;
@@ -132,7 +173,7 @@
       display: block;
       width: 80px;
       height: 40px;
-      background: #fff;
+      background: #26455C;
       position: absolute;
       top: 65px;
       left: 20px;
@@ -142,18 +183,18 @@
     .symptoms {
       flex: 1;
       min-height: 120px;
-      border: 2px dashed #ffc1e3;
+      border: 2px dashed var(--color-element-border);
       border-radius: 4px;
       padding: 10px;
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
-      background-color: #fff;
+      background-color: var(--color-element-bg);
     }
 
     .symptom-slot {
-      background: #ffebf2;
-      border: 1px solid #ffc1e3;
+      background: #2b4e6a;
+      border: 1px solid var(--color-element-border);
       padding: 8px 12px;
       border-radius: 4px;
       margin: 5px;
@@ -162,14 +203,16 @@
     }
 
     .symptom-slot:hover {
-      background: #ffd9e8;
+      background: #345b78;
     }
 
-    /* --- Rechte Spalte (Weiter mit Diagnose) --- */
+    /* =====================
+       Rechte Spalte (Weiter mit Diagnose)
+       ===================== */
     .sidebar-right {
-      background-color: #ffe6ef;
+      background-color: var(--color-sidebar-bg);
       padding: 20px;
-      border-left: 1px solid #ffd9e8;
+      border-left: 1px solid var(--color-sidebar-border);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -179,12 +222,11 @@
     .sidebar-right h2 {
       margin-bottom: 20px;
       font-size: 1.2rem;
-      color: #c2185b;
     }
 
     .sidebar-right button {
       padding: 12px 20px;
-      background: #c2185b;
+      background: var(--color-accent);
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -194,11 +236,8 @@
     }
 
     .sidebar-right button:hover {
-      background: #ad1457;
+      background: var(--color-accent-hover);
     }
-
-    /* --- Keyframe Animationen (optional) --- */
-    /* Du kannst Animationen hinzufügen, wenn du magst */
   </style>
 </head>
 <body>
@@ -292,7 +331,7 @@
 
     // Falls keine Symptome gedroppt wurden, Standardtext
     if(symptomTexte.length === 0) {
-      symptomTexte.push("Keine Symptome ausgewählt");
+      symptomTexte.push("keine Symptome ausgewählt");
     }
 
     // Dynamische Diagnose-Meldung
@@ -305,10 +344,10 @@
     let diagnoseWindow = window.open("", "Diagnose", "width=420,height=300");
 
     if (diagnoseWindow) {
-      diagnoseWindow.document.write("<html><head><title>Diagnose</title></head><body style='font-family:Arial, sans-serif; padding:20px; text-align:center; background:#fff0f6;'>");
-      diagnoseWindow.document.write("<h2 style='color:#c2185b;'>Diagnose</h2>");
+      diagnoseWindow.document.write("<html><head><title>Diagnose</title></head><body style='font-family:Arial, sans-serif; padding:20px; text-align:center; background:#0B2133; color:#fff;'>");
+      diagnoseWindow.document.write("<h2 style='margin-bottom:15px;'>Diagnose</h2>");
       diagnoseWindow.document.write("<p style='font-size:16px; line-height:1.4;'>" + diagnoseText + "</p>");
-      diagnoseWindow.document.write("<button onclick='window.close()' style='margin-top:20px; padding:10px 20px; background-color:#c2185b; color:white; border:none; border-radius:5px; cursor:pointer;'>Schließen</button>");
+      diagnoseWindow.document.write("<button onclick='window.close()' style='margin-top:20px; padding:10px 20px; background-color:#007BFF; color:white; border:none; border-radius:5px; cursor:pointer;'>Schließen</button>");
       diagnoseWindow.document.write("</body></html>");
       diagnoseWindow.document.close();
     } else {
